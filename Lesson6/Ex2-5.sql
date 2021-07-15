@@ -30,4 +30,11 @@ FROM likes GROUP BY user;
 SELECT gender, COUNT(*) as 'quantity' FROM profiles GROUP BY gender;
 
 -- Найти 10 пользователей, которые проявляют наименьшую активность в использовании социальной сети.
---  Пока не нашел решение
+SELECT *,
+(
+(SELECT COUNT(1) FROM `messages` WHERE messages.from_user_id = users.id) +
+(SELECT COUNT(1) FROM `posts` WHERE posts.user_id = users.id) +
+(SELECT COUNT(1) FROM `likes` WHERE likes.from_user_id = users.id)
+) AS `count`
+FROM `users`
+ORDER BY `count` DESC LIMIT 10
