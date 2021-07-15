@@ -8,10 +8,24 @@ SELECT from_user_id, COUNT(*) as messages FROM messages WHERE to_user_id=2 GROUP
 
 -- Подсчитать общее количество лайков, которые получили 10 самых молодых пользователей.
 SELECT * FROM profiles;
-SELECT * from likes;
-SELECT COUNT(*) as 'Likes' FROM profiles WHERE (YEAR(NOW())-YEAR(birth_date)) < 10;
+SELECT COUNT(*) as 'Likes' FROM likes;
+SELECT
+    (  
+       SELECT COUNT(*)
+	   FROM profiles prof
+	   WHERE prof.user_id = likes.id and (YEAR(NOW())-YEAR(prof.birth_date)) < 10
+    ) AS count_likes
+FROM likes;
 
 -- Определить кто больше поставил лайков (всего) - мужчины или женщины?
+
+SELECT
+    (  
+       SELECT gender
+	   FROM profiles prof
+	   WHERE prof.user_id = likes.id 
+    ) AS user, COUNT(1)
+FROM likes GROUP BY user;
 
 SELECT gender, COUNT(*) as 'quantity' FROM profiles GROUP BY gender;
 
