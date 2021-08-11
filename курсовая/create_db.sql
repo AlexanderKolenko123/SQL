@@ -144,7 +144,7 @@ CREATE TABLE reviews (
 	movies_id INT UNSIGNED,
 	user_id INT UNSIGNED,
 	body VARCHAR(500),
-	is_positive BIT DEFAULT 1,
+	is_positive INT DEFAULT 1,
 	created_at TIMESTAMP DEFAULT now(),
 	FOREIGN KEY (movies_id) REFERENCES movies (id),
 	FOREIGN KEY (user_id) REFERENCES users (id)
